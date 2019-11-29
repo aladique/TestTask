@@ -1,0 +1,94 @@
+package ru.teamidea;
+
+import java.util.ArrayList;
+
+    /*Создайте массив из 1000 случайных чисел и сгенерируйте для него значения (натуральные числа от 1 до 100). Посчитайте и выведите:
+    1) максимальное число в массиве;
+    2) минимальное число в массиве;
+    3) самое часто встречающееся число;
+    4) самое редко встречающееся число;
+    5) среднее значение.*/
+
+public class Main {
+
+    //Исходные данные
+    private final static int minValueOfRange = 1;
+    private final static int maxValueOfRange = 100;
+    private final static int arrayLength = 1000;
+    private static int[] array = new int[arrayLength];
+
+    //Данные, которые необходимо вычислить
+    private static int maxNumberInArray = 0;
+    private static int minNumberInArray = 0;
+    private static ArrayList<Integer> mostCommonNumbers = new ArrayList<>(); //Список потому, что таких чисел
+                                                                            //может быть несколько
+    private static ArrayList<Integer> leastCommonNumbers = new ArrayList<>();
+    private static double averageNumber = 0;
+
+    public static void main(String[] args) {
+        doCalc();
+        System.out.println("Максимальное число в массиве " + maxNumberInArray);
+        System.out.println("Минимальное число в массиве " + minNumberInArray);
+        System.out.println("Самые часто встречающиеся числа " + mostCommonNumbers.toString());
+        System.out.println("Самые редко встречающиеся числа " + leastCommonNumbers.toString());
+        System.out.println("Среднее значение "+ averageNumber);
+    }
+
+    //Метод, в котором происходят вычисления искомых данных
+    private static void doCalc() {
+        //вспомогательный массив, в котором номером ячейки является значение числа из нашего диапазона натуральных
+        //чисел(от 1 до 100), а значением ячейки является количество повторений этого числа в основном массиве array
+        int[] arrayMap = new int[maxValueOfRange+1];
+        int mostCommonValue = minValueOfRange;
+        int leastCommonValue = maxValueOfRange;
+        int sum = 0;
+
+        //Цикл, заполняющий исходный и вспомагательный массивы
+        for (int i = 0; i < array.length; i++) {
+            array[i] = getRandomNumber(minValueOfRange, maxValueOfRange);
+            sum += array[i];
+            ++arrayMap[array[i]];
+        }
+
+        //Вычисление максимального и минимального количества появлений чисел в исходном массиве
+        for (int i = minValueOfRange; i < arrayMap.length; i++) {
+            if (mostCommonValue<arrayMap[i]){
+                mostCommonValue = arrayMap[i];
+            }
+            if (leastCommonValue>arrayMap[i]){
+                leastCommonValue = arrayMap[i];
+            }
+        }
+
+        //Вычисление значений натуральных чисел, которые чаще всего и реже всего появляются в исходном массиве, и
+        //запись этих чисел в список
+        for (int i = minValueOfRange; i < arrayMap.length; i++) {
+            if (arrayMap[i]==mostCommonValue){
+                mostCommonNumbers.add(i);
+            }
+            if (arrayMap[i]==leastCommonValue){
+                leastCommonNumbers.add(i);
+            }
+        }
+
+
+        //Вычисление максимального и минимального натуральных чисел в исходном массиве
+        for (int i = 0; i < arrayMap.length; i++) {
+            minNumberInArray = i;
+            if (arrayMap[i]!=0){break;}
+        }
+        for (int i = arrayMap.length-1; i >= 0 ; i--) {
+            maxNumberInArray = i;
+            if (arrayMap[i]!=0){break;}
+        }
+
+        //Вычисление среднего значения
+        averageNumber = sum / (double)array.length;
+    }
+
+    //Метод для генерации случайных значений
+    static int getRandomNumber(int min, int max){
+        max -= min;
+        return (int) (Math.random() * ++max) + min;
+    }
+}
