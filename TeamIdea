@@ -21,8 +21,8 @@ public class Main {
     //Required data
     private static int maxNumberInArray = 0;
     private static int minNumberInArray = 0;
-    private static ArrayList<Integer> mostCommonNumbers = new ArrayList<>();    //Lists because there can be several
-    private static ArrayList<Integer> leastCommonNumbers = new ArrayList<>();      //common/rare numbers in source array
+    private static ArrayList<Integer> mostCommonNumbers = new ArrayList<>();    //Lists because there can be several the
+    private static ArrayList<Integer> leastCommonNumbers = new ArrayList<>();   //most/least numbers in source array
     private static double meanNumber = 0;
 
     public static void main(String[] args) {
